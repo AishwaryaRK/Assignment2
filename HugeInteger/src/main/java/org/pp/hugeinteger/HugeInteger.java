@@ -46,16 +46,25 @@ public class HugeInteger {
 	public HugeInteger sub(HugeInteger hugeInteger2) {
 		HugeInteger sum = new HugeInteger();
 		for (int i = 0; i < length; i++) {
-			sum.digits[i + 1] = digits[i];
+			sum.digits[i] = digits[i];
 		}
-		sum.length = length + 1;
-		for (int i = length, j = hugeInteger2.length - 1; j >= 0; i--, j--) {
+		System.out.println("init" + sum);
+		sum.length = length;
+		for (int i = length - 1, j = hugeInteger2.length - 1; j >= 0; i--, j--) {
+
 			if (sum.getDigits()[i] < hugeInteger2.digits[j]) {
 				sum.getDigits()[i] = sum.getDigits()[i] + 10 - hugeInteger2.digits[j];
-				sum.getDigits()[i - 1]--;
+				int k = i - 1;
+				while (sum.getDigits()[k] == 0) {
+					sum.getDigits()[k] += 9;
+					k--;
+				}
+				sum.getDigits()[k]--;
+				System.out.println("i=" + i + ", j=" + j + ", k=" + k + ", " + sum.getDigits()[k]);
 			} else {
 				sum.getDigits()[i] -= hugeInteger2.digits[j];
 			}
+			System.out.println("a");
 		}
 		return sum;
 	}
